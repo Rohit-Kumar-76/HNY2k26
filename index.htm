@@ -195,13 +195,16 @@
 
         @keyframes fall {
             from {
-                transform: translateY(-10px)
+                top: -20px;
+                opacity: 1;
             }
 
             to {
-                transform: translateY(110vh)
+                top: 110vh;
+                opacity: 0;
             }
         }
+
 
         /* DJ */
         .dj {
@@ -296,15 +299,30 @@
         function startStars() {
             setInterval(() => {
                 let s = document.createElement("div");
-                s.className = "star"; s.innerHTML = "★";
+                s.className = "star";
+                s.innerHTML = "★";
+
+                // ⭐ ALWAYS START FROM TOP
                 s.style.left = Math.random() * 100 + "vw";
+                s.style.top = "-20px";
+
                 s.style.animationDuration = 3 + Math.random() * 3 + "s";
                 document.body.appendChild(s);
-                if (Math.random() < .4) {
-                    setTimeout(() => { let r = s.getBoundingClientRect(); firework(r.left, r.top); s.remove() }, 1200 + Math.random() * 1000);
-                } else setTimeout(() => s.remove(), 6000);
+
+                // 🔥 40% chance mid-air blast
+                if (Math.random() < 0.4) {
+                    let blastTime = 1000 + Math.random() * 1500;
+                    setTimeout(() => {
+                        let rect = s.getBoundingClientRect();
+                        firework(rect.left, rect.top);
+                        s.remove();
+                    }, blastTime);
+                } else {
+                    setTimeout(() => s.remove(), 7000);
+                }
             }, 120);
         }
+
 
         function djLight() {
             let d = document.createElement("div");
