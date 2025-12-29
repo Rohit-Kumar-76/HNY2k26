@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>New Year Celebration</title>
 
     <style>
@@ -134,24 +133,19 @@
             }
         }
 
-        /* 🌟 ATTRACTIVE CARD 🌟 */
+        /* CARD */
         .card {
             display: none;
             width: 75%;
             max-width: 520px;
             margin: 0 auto;
-            padding: 35px 30px;
-            background: linear-gradient(135deg,
-                    rgba(255, 255, 255, .18),
-                    rgba(255, 255, 255, .05));
+            padding: 35px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, .05));
             backdrop-filter: blur(12px);
             border-radius: 25px;
             text-align: center;
             border: 2px solid rgba(255, 215, 0, .6);
-            box-shadow:
-                0 0 40px rgba(255, 215, 0, .6),
-                inset 0 0 25px rgba(255, 255, 255, .15);
-            transform-origin: top;
+            box-shadow: 0 0 40px gold;
             animation: openCard 1s ease forwards;
             z-index: 10;
             position: relative;
@@ -170,21 +164,17 @@
         }
 
         .card h2 {
-            font-size: 38px;
-            margin-bottom: 15px;
             color: gold;
-            text-shadow: 0 0 20px gold;
+            font-size: 38px
         }
 
         .card p {
-            font-size: 18px;
-            line-height: 1.7;
+            font-size: 18px
         }
 
-        .card .from {
+        .from {
             margin-top: 20px;
-            font-size: 16px;
-            opacity: .9;
+            text-align: right
         }
 
         /* STARS */
@@ -197,16 +187,14 @@
 
         @keyframes fall {
             from {
-                top: -20px;
-                opacity: 1;
+                top: -20px
             }
 
             to {
                 top: 110vh;
-                opacity: 0;
+                opacity: 0
             }
         }
-
 
         /* DJ */
         .dj {
@@ -214,7 +202,6 @@
             top: -120px;
             width: 6px;
             height: 120px;
-            opacity: .8;
             animation: move linear forwards
         }
 
@@ -233,63 +220,29 @@
             box-shadow: 0 0 15px cyan
         }
 
+        /* 🚀 ROCKET */
+        .rocket {
+            position: absolute;
+            bottom: -40px;
+            width: 6px;
+            height: 35px;
+            background: linear-gradient(to top, gold, orange);
+            box-shadow: 0 0 15px gold;
+            animation: rocketFly linear forwards;
+            z-index: 6;
+        }
+
+        @keyframes rocketFly {
+            to {
+                bottom: 110vh
+            }
+        }
+
         canvas {
             position: fixed;
             top: 0;
             left: 0;
             z-index: 1
-        }
-
-        /* 📱 MOBILE RESPONSIVE FIX */
-        @media (max-width: 768px) {
-
-            .welcome {
-                margin-top: 60px;
-                padding: 0 10px;
-            }
-
-            .welcome h1 {
-                font-size: 30px;
-            }
-
-            .ribbon {
-                width: 85%;
-                height: 55px;
-                font-size: 18px;
-            }
-
-            .card {
-                width: 80%;
-                padding: 25px 20px;
-                border-radius: 20px;
-            }
-
-            .card h2 {
-                font-size: 28px;
-            }
-
-            .card p {
-                font-size: 16px;
-            }
-
-            .bulb {
-                width: 18px;
-                height: 18px;
-            }
-
-            .lights.left,
-            .lights.right {
-                width: 32px;
-            }
-
-            .dj {
-                width: 10px;
-                height: 160px;
-            }
-
-            .star {
-                font-size: 18px;
-            }
         }
     </style>
 </head>
@@ -320,98 +273,141 @@
 
     <div class="welcome">
         <h1>🎉 Thanks To Open 🎉</h1>
-        <p>Click ribbon to open your surprise</p>
+        <p id="msg">Click ribbon to open your surprise</p>
     </div>
 
     <div class="ribbon" onclick="openCard()">🎀 OPEN CARD 🎀</div>
 
     <div class="card" id="card">
-        <h2>🎆 Happy New Year 🎆</h2>
-        <p>
-            May this New Year bring you<br>
-            happiness, success & endless joy ✨
-        </p>
-        <p class="from">— From Rohit Mehta 💖</p>
+        <h2 id="typeTitle"></h2>
+        <p id="line1"></p>
+        <p id="line2"></p>
+        <p class="from" id="fromText"></p>
     </div>
 
     <canvas id="fw"></canvas>
 
     <script>
-        window.addEventListener("resize", () => {
-            c.width = innerWidth;
-            c.height = innerHeight;
-        });
-
-
         const c = document.getElementById("fw"), ctx = c.getContext("2d");
-        c.width = innerWidth; c.height = innerHeight; let particles = [];
+        c.width = innerWidth; c.height = innerHeight;
+        let particles = [];
 
-        function firework(x = c.width / 2, y = c.height / 2) {
+        function firework(x, y) {
             for (let i = 0; i < 120; i++)
-                particles.push({ x, y, dx: (Math.random() - .5) * 8, dy: (Math.random() - .5) * 8, life: 100, col: `hsl(${Math.random() * 360},100%,50%)` });
+                particles.push({ x, y, dx: (Math.random() - .5) * 8, dy: (Math.random() - .5) * 8, life: 80, col: `hsl(${Math.random() * 360},100%,50%)` });
+        }
+        function yellowBlast(x, y) {
+            for (let i = 0; i < 90; i++)
+                particles.push({ x, y, dx: (Math.random() - .5) * 10, dy: (Math.random() - .5) * 10, life: 70, col: "yellow" });
         }
         (function animate() {
             ctx.clearRect(0, 0, c.width, c.height);
-            particles.forEach((p, i) => { p.x += p.dx; p.y += p.dy; p.life--; ctx.fillStyle = p.col; ctx.fillRect(p.x, p.y, 3, 3); if (p.life <= 0) particles.splice(i, 1) });
+            particles.forEach((p, i) => {
+                p.x += p.dx; p.y += p.dy; p.life--;
+                ctx.fillStyle = p.col;
+                ctx.fillRect(p.x, p.y, 3, 3);
+                if (p.life <= 0) particles.splice(i, 1);
+            });
             requestAnimationFrame(animate);
         })();
 
+        /* Typing */
+        function typeText(id, text, speed, cb) {
+            let i = 0, el = document.getElementById(id);
+            el.innerHTML = "";
+            let t = setInterval(() => {
+                el.innerHTML += text[i++];
+                if (i === text.length) { clearInterval(t); cb && cb(); }
+            }, speed);
+        }
+        function startTypingCard() {
+            typeText("typeTitle", "🎆 Happy New Year 🎆", 80, () => {
+                typeText("line1", "May this New Year bring you", 50, () => {
+                    typeText("line2", "happiness, success & endless joy ✨", 50, () => {
+                        typeText("fromText", "— From Rohit Mehta 💖", 60);
+                    });
+                });
+            });
+        }
+
+        /* Effects */
         function startStars() {
             setInterval(() => {
                 let s = document.createElement("div");
-                s.className = "star";
-                s.innerHTML = "★";
-
-                // ⭐ ALWAYS START FROM TOP
+                s.className = "star"; s.innerHTML = "★";
                 s.style.left = Math.random() * 100 + "vw";
-                s.style.top = "-20px";
-
                 s.style.animationDuration = 3 + Math.random() * 3 + "s";
                 document.body.appendChild(s);
-
-                // 🔥 40% chance mid-air blast
-                if (Math.random() < 0.4) {
-                    let blastTime = 1000 + Math.random() * 1500;
-                    setTimeout(() => {
-                        let rect = s.getBoundingClientRect();
-                        firework(rect.left, rect.top);
-                        s.remove();
-                    }, blastTime);
-                } else {
-                    setTimeout(() => s.remove(), 7000);
-                }
+                setTimeout(() => s.remove(), 6000);
             }, 120);
         }
-
-
         function djLight() {
             let d = document.createElement("div");
             d.className = "dj";
             d.style.left = Math.random() * 100 + "vw";
             d.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-            d.style.animationDuration = 1.5 + Math.random() * 1.5 + "s";
+            d.style.animationDuration = 1.5 + Math.random() + "s";
             document.body.appendChild(d);
-            if (Math.random() < .5)
-                setTimeout(() => { let r = d.getBoundingClientRect(); firework(r.left, r.top + 60); d.remove() }, 800 + Math.random() * 600);
-            else setTimeout(() => d.remove(), 3000);
+            setTimeout(() => {
+                let r = d.getBoundingClientRect();
+                firework(r.left, r.top + 60);
+                d.remove();
+            }, 1200);
         }
-
         function droneShow() {
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 30; i++) {
                 let dot = document.createElement("div");
-                dot.className = "drone"; dot.style.left = "50vw"; dot.style.top = "50vh";
+                dot.className = "drone";
+                dot.style.left = "50vw"; dot.style.top = "50vh";
                 document.body.appendChild(dot);
-                setTimeout(() => { dot.style.transition = "2s"; dot.style.left = Math.random() * 100 + "vw"; dot.style.top = Math.random() * 40 + "vh" }, 100);
+                setTimeout(() => {
+                    dot.style.transition = "2s";
+                    dot.style.left = Math.random() * 100 + "vw";
+                    dot.style.top = Math.random() * 40 + "vh";
+                }, 100);
                 setTimeout(() => dot.remove(), 4000);
             }
         }
+        function launchRocket() {
+            let r = document.createElement("div");
+            r.className = "rocket";
+            r.style.left = Math.random() * 90 + "vw";
+            r.style.animationDuration = 1.5 + Math.random() + "s";
+            document.body.appendChild(r);
+            setTimeout(() => {
+                let rect = r.getBoundingClientRect();
+                yellowBlast(rect.left, rect.top);
+                r.remove();
+            }, 1500);
+        }
+        function dropFirecracker() {
+            let s = document.createElement("div");
+            s.className = "star"; s.innerHTML = "🔥";
+            s.style.left = Math.random() * 100 + "vw";
+            s.style.animationDuration = "3s";
+            document.body.appendChild(s);
+            setTimeout(() => {
+                let r = s.getBoundingClientRect();
+                yellowBlast(r.left, r.top);
+                s.remove();
+            }, 2000);
+        }
 
         function openCard() {
-            const ribbon = document.querySelector(".ribbon");
-            ribbon.classList.add("hide");
-            setTimeout(() => { ribbon.style.display = "none"; document.getElementById("card").style.display = "block" }, 400);
+            document.getElementById("msg").innerText = "🎁 Yoo! This is your surprise 🎁";
+            document.querySelector(".ribbon").classList.add("hide");
+            setTimeout(() => {
+                document.querySelector(".ribbon").style.display = "none";
+                document.getElementById("card").style.display = "block";
+                startTypingCard();
+            }, 400);
             document.querySelectorAll(".lights").forEach(l => l.classList.add("party"));
-            startStars(); setInterval(() => firework(), 700); setInterval(djLight, 120); setInterval(droneShow, 2500);
+            startStars();
+            setInterval(() => firework(innerWidth / 2, innerHeight / 2), 900);
+            setInterval(djLight, 200);
+            setInterval(droneShow, 3000);
+            setInterval(launchRocket, 2000);
+            setInterval(dropFirecracker, 2300);
         }
     </script>
 
