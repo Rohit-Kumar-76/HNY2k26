@@ -406,7 +406,12 @@
             setInterval(() => firework(innerWidth / 2, innerHeight / 2), 900);
             setInterval(djLight, 200);
             setInterval(droneShow, 3000);
-            setInterval(launchRocket, 2000);
+            setInterval(() => {
+                for (let i = 0; i < 3; i++) {   // 🔥 3 rockets at once
+                    launchRocket();
+                }
+            }, 1200);  // ⏱️ har 1.2 sec
+
             setInterval(dropFirecracker, 2300);
         }
     </script>
