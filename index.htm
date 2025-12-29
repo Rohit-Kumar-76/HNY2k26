@@ -15,18 +15,18 @@
             color: white;
         }
 
-        /* ========== LIGHTS ========== */
+        /* LIGHTS */
         .lights {
             position: fixed;
             display: flex;
             justify-content: space-evenly;
-            z-index: 5;
+            z-index: 5
         }
 
         .lights.top {
             top: 0;
             left: 0;
-            width: 100%;
+            width: 100%
         }
 
         .lights.left {
@@ -34,7 +34,7 @@
             left: 0;
             height: 100%;
             width: 40px;
-            flex-direction: column;
+            flex-direction: column
         }
 
         .lights.right {
@@ -42,7 +42,7 @@
             right: 0;
             height: 100%;
             width: 40px;
-            flex-direction: column;
+            flex-direction: column
         }
 
         .bulb {
@@ -73,7 +73,7 @@
         }
 
         .party .bulb {
-            animation: blink .25s infinite alternate;
+            animation: blink .25s infinite alternate
         }
 
         @keyframes blink {
@@ -86,33 +86,31 @@
             }
         }
 
-        /* ========== WELCOME ========== */
+        /* WELCOME */
         .welcome {
             text-align: center;
             margin-top: 100px;
-            position: relative;
             z-index: 10;
+            position: relative
         }
 
         .welcome h1 {
             font-size: 45px;
-            text-shadow: 0 0 20px gold;
+            text-shadow: 0 0 25px gold
         }
 
-        /* ========== RIBBON ========== */
+        /* RIBBON */
         .ribbon {
             margin: 60px auto;
             width: 260px;
             height: 60px;
-            background: #d60000;
-            color: white;
-            font-size: 20px;
-            text-align: center;
+            background: linear-gradient(45deg, #ff0000, #b30000);
             line-height: 60px;
+            text-align: center;
             border-radius: 30px;
             cursor: pointer;
-            box-shadow: 0 0 25px red;
             animation: pulse 1.3s infinite;
+            box-shadow: 0 0 30px red;
             z-index: 10;
             position: relative;
         }
@@ -123,38 +121,76 @@
             }
         }
 
-        /* ========== CARD ========== */
+        .ribbon.hide {
+            animation: buttonOut .4s forwards
+        }
+
+        @keyframes buttonOut {
+            to {
+                transform: scale(0);
+                opacity: 0
+            }
+        }
+
+        /* 🌟 ATTRACTIVE CARD 🌟 */
         .card {
             display: none;
-            width: 70%;
-            max-width: 500px;
-            margin: auto;
-            padding: 25px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 20px;
+            width: 75%;
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 35px 30px;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, .18),
+                    rgba(255, 255, 255, .05));
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
             text-align: center;
-            box-shadow: 0 0 40px gold;
-            animation: open 1s forwards;
+            border: 2px solid rgba(255, 215, 0, .6);
+            box-shadow:
+                0 0 40px rgba(255, 215, 0, .6),
+                inset 0 0 25px rgba(255, 255, 255, .15);
+            transform-origin: top;
+            animation: openCard 1s ease forwards;
             z-index: 10;
             position: relative;
         }
 
-        @keyframes open {
+        @keyframes openCard {
             from {
-                transform: scaleY(0)
+                transform: scaleY(0) rotateX(90deg);
+                opacity: 0
             }
 
             to {
-                transform: scaleY(1)
+                transform: scaleY(1) rotateX(0);
+                opacity: 1
             }
         }
 
-        /* ========== STARS ========== */
+        .card h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            color: gold;
+            text-shadow: 0 0 20px gold;
+        }
+
+        .card p {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .card .from {
+            margin-top: 20px;
+            font-size: 16px;
+            opacity: .9;
+        }
+
+        /* STARS */
         .star {
             position: absolute;
             color: white;
             font-size: 14px;
-            animation: fall linear infinite;
+            animation: fall linear forwards
         }
 
         @keyframes fall {
@@ -167,14 +203,14 @@
             }
         }
 
-        /* ========== DJ LIGHT ========== */
+        /* DJ */
         .dj {
             position: absolute;
             top: -120px;
             width: 6px;
             height: 120px;
             opacity: .8;
-            animation: move linear forwards;
+            animation: move linear forwards
         }
 
         @keyframes move {
@@ -183,29 +219,26 @@
             }
         }
 
-        /* ========== DRONE DOT ========== */
         .drone {
             position: absolute;
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: cyan;
-            box-shadow: 0 0 15px cyan;
+            box-shadow: 0 0 15px cyan
         }
 
-        /* ========== CANVAS ========== */
         canvas {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: 1
         }
     </style>
 </head>
 
 <body>
 
-    <!-- TOP LIGHTS -->
     <div class="lights top">
         <div class="bulb"></div>
         <div class="bulb"></div>
@@ -213,8 +246,6 @@
         <div class="bulb"></div>
         <div class="bulb"></div>
     </div>
-
-    <!-- LEFT LIGHTS -->
     <div class="lights left">
         <div class="bulb"></div>
         <div class="bulb"></div>
@@ -222,8 +253,6 @@
         <div class="bulb"></div>
         <div class="bulb"></div>
     </div>
-
-    <!-- RIGHT LIGHTS -->
     <div class="lights right">
         <div class="bulb"></div>
         <div class="bulb"></div>
@@ -239,107 +268,72 @@
 
     <div class="ribbon" onclick="openCard()">🎀 OPEN CARD 🎀</div>
 
-    <div class="card z-index" id="card">
+    <div class="card" id="card">
         <h2>🎆 Happy New Year 🎆</h2>
         <p>
-            May your life shine brighter than fireworks ✨<br>
-            Success • Happiness • Health 💖
+            May this New Year bring you<br>
+            happiness, success & endless joy ✨
         </p>
-        <p>Wishes From Rohit Mehta 💖</p>
+        <p class="from">— From Rohit Mehta 💖</p>
     </div>
 
     <canvas id="fw"></canvas>
 
     <script>
-        /* ========== FIREWORKS ========== */
-        const c = document.getElementById("fw");
-        const ctx = c.getContext("2d");
-        c.width = innerWidth;
-        c.height = innerHeight;
-        let particles = [];
+        const c = document.getElementById("fw"), ctx = c.getContext("2d");
+        c.width = innerWidth; c.height = innerHeight; let particles = [];
 
-        function firework() {
-            for (let i = 0; i < 140; i++) {
-                particles.push({
-                    x: c.width / 2,
-                    y: c.height / 2,
-                    dx: (Math.random() - 0.5) * 9,
-                    dy: (Math.random() - 0.5) * 9,
-                    life: 120,
-                    col: `hsl(${Math.random() * 360},100%,50%)`
-                });
-            }
+        function firework(x = c.width / 2, y = c.height / 2) {
+            for (let i = 0; i < 120; i++)
+                particles.push({ x, y, dx: (Math.random() - .5) * 8, dy: (Math.random() - .5) * 8, life: 100, col: `hsl(${Math.random() * 360},100%,50%)` });
         }
-
-        function animate() {
+        (function animate() {
             ctx.clearRect(0, 0, c.width, c.height);
-            particles.forEach((p, i) => {
-                p.x += p.dx;
-                p.y += p.dy;
-                p.life--;
-                ctx.fillStyle = p.col;
-                ctx.fillRect(p.x, p.y, 3, 3);
-                if (p.life <= 0) particles.splice(i, 1);
-            });
+            particles.forEach((p, i) => { p.x += p.dx; p.y += p.dy; p.life--; ctx.fillStyle = p.col; ctx.fillRect(p.x, p.y, 3, 3); if (p.life <= 0) particles.splice(i, 1) });
             requestAnimationFrame(animate);
-        }
-        animate();
+        })();
 
-        /* ========== STARS ========== */
         function startStars() {
             setInterval(() => {
                 let s = document.createElement("div");
-                s.className = "star";
-                s.innerHTML = "★";
+                s.className = "star"; s.innerHTML = "★";
                 s.style.left = Math.random() * 100 + "vw";
-                s.style.animationDuration = 2 + Math.random() * 3 + "s";
+                s.style.animationDuration = 3 + Math.random() * 3 + "s";
                 document.body.appendChild(s);
-                setTimeout(() => s.remove(), 5000);
-            }, 100);
+                if (Math.random() < .4) {
+                    setTimeout(() => { let r = s.getBoundingClientRect(); firework(r.left, r.top); s.remove() }, 1200 + Math.random() * 1000);
+                } else setTimeout(() => s.remove(), 6000);
+            }, 120);
         }
 
-        /* ========== DJ LIGHT ========== */
         function djLight() {
             let d = document.createElement("div");
             d.className = "dj";
             d.style.left = Math.random() * 100 + "vw";
             d.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-            d.style.animationDuration = 1 + Math.random() * 2 + "s";
+            d.style.animationDuration = 1.5 + Math.random() * 1.5 + "s";
             document.body.appendChild(d);
-            setTimeout(() => d.remove(), 3000);
+            if (Math.random() < .5)
+                setTimeout(() => { let r = d.getBoundingClientRect(); firework(r.left, r.top + 60); d.remove() }, 800 + Math.random() * 600);
+            else setTimeout(() => d.remove(), 3000);
         }
 
-        /* ========== DRONE SHOW ========== */
         function droneShow() {
-            for (let i = 0; i < 60; i++) {
+            for (let i = 0; i < 50; i++) {
                 let dot = document.createElement("div");
-                dot.className = "drone";
-                dot.style.left = "50vw";
-                dot.style.top = "50vh";
+                dot.className = "drone"; dot.style.left = "50vw"; dot.style.top = "50vh";
                 document.body.appendChild(dot);
-
-                setTimeout(() => {
-                    dot.style.transition = "2s";
-                    dot.style.left = Math.random() * 100 + "vw";
-                    dot.style.top = Math.random() * 40 + "vh";
-                }, 100);
-
+                setTimeout(() => { dot.style.transition = "2s"; dot.style.left = Math.random() * 100 + "vw"; dot.style.top = Math.random() * 40 + "vh" }, 100);
                 setTimeout(() => dot.remove(), 4000);
             }
         }
 
-        /* ========== OPEN CARD ========== */
         function openCard() {
-            document.getElementById("card").style.display = "block";
-
-            document.querySelectorAll(".lights").forEach(l => {
-                l.classList.add("party");
-            });
-
-            startStars();
-            setInterval(firework, 600);
-            setInterval(djLight, 120);
-            setInterval(droneShow, 2500);
+            const ribbon = document.querySelector(".ribbon");
+            ribbon.classList.add("hide");
+            setTimeout(() => { ribbon.style.display = "none"; document.getElementById("card").style.display = "block" }, 400);
+            document.querySelectorAll(".lights").forEach(l => l.classList.add("party"));
+            startStars(); setInterval(() => firework(), 700); setInterval(djLight, 120); setInterval(droneShow, 2500);
         }
     </script>
 
