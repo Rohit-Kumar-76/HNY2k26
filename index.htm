@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>New Year Celebration</title>
 
     <style>
@@ -237,6 +239,58 @@
             left: 0;
             z-index: 1
         }
+
+        /* 📱 MOBILE RESPONSIVE FIX */
+        @media (max-width: 768px) {
+
+            .welcome {
+                margin-top: 60px;
+                padding: 0 10px;
+            }
+
+            .welcome h1 {
+                font-size: 30px;
+            }
+
+            .ribbon {
+                width: 85%;
+                height: 55px;
+                font-size: 18px;
+            }
+
+            .card {
+                width: 90%;
+                padding: 25px 20px;
+                border-radius: 20px;
+            }
+
+            .card h2 {
+                font-size: 28px;
+            }
+
+            .card p {
+                font-size: 16px;
+            }
+
+            .bulb {
+                width: 18px;
+                height: 18px;
+            }
+
+            .lights.left,
+            .lights.right {
+                width: 32px;
+            }
+
+            .dj {
+                width: 10px;
+                height: 160px;
+            }
+
+            .star {
+                font-size: 18px;
+            }
+        }
     </style>
 </head>
 
@@ -283,6 +337,12 @@
     <canvas id="fw"></canvas>
 
     <script>
+        window.addEventListener("resize", () => {
+            c.width = innerWidth;
+            c.height = innerHeight;
+        });
+
+
         const c = document.getElementById("fw"), ctx = c.getContext("2d");
         c.width = innerWidth; c.height = innerHeight; let particles = [];
 
