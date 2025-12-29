@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>New Year Celebration</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(to bottom, #000428, #004e92);
+            height: 100vh;
+            overflow: hidden;
+            font-family: Arial;
+            color: white;
+        }
+
+        /* ========== LIGHTS ========== */
+        .lights {
+            position: fixed;
+            display: flex;
+            justify-content: space-evenly;
+            z-index: 5;
+        }
+
+        .lights.top {
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        .lights.left {
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 40px;
+            flex-direction: column;
+        }
+
+        .lights.right {
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 40px;
+            flex-direction: column;
+        }
+
+        .bulb {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            animation: blink 1.5s infinite alternate;
+        }
+
+        .bulb:nth-child(1) {
+            background: red
+        }
+
+        .bulb:nth-child(2) {
+            background: yellow
+        }
+
+        .bulb:nth-child(3) {
+            background: lime
+        }
+
+        .bulb:nth-child(4) {
+            background: cyan
+        }
+
+        .bulb:nth-child(5) {
+            background: magenta
+        }
+
+        .party .bulb {
+            animation: blink .25s infinite alternate;
+        }
+
+        @keyframes blink {
+            from {
+                box-shadow: 0 0 5px
+            }
+
+            to {
+                box-shadow: 0 0 20px 10px
+            }
+        }
+
+        /* ========== WELCOME ========== */
+        .welcome {
+            text-align: center;
+            margin-top: 100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .welcome h1 {
+            font-size: 45px;
+            text-shadow: 0 0 20px gold;
+        }
+
+        /* ========== RIBBON ========== */
+        .ribbon {
+            margin: 60px auto;
+            width: 260px;
+            height: 60px;
+            background: #d60000;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            line-height: 60px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 25px red;
+            animation: pulse 1.3s infinite;
+            z-index: 10;
+            position: relative;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.08)
+            }
+        }
+
+        /* ========== CARD ========== */
+        .card {
+            display: none;
+            width: 70%;
+            max-width: 500px;
+            margin: auto;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 0 40px gold;
+            animation: open 1s forwards;
+            z-index: 10;
+            position: relative;
+        }
+
+        @keyframes open {
+            from {
+                transform: scaleY(0)
+            }
+
+            to {
+                transform: scaleY(1)
+            }
+        }
+
+        /* ========== STARS ========== */
+        .star {
+            position: absolute;
+            color: white;
+            font-size: 14px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            from {
+                transform: translateY(-10px)
+            }
+
+            to {
+                transform: translateY(110vh)
+            }
+        }
+
+        /* ========== DJ LIGHT ========== */
+        .dj {
+            position: absolute;
+            top: -120px;
+            width: 6px;
+            height: 120px;
+            opacity: .8;
+            animation: move linear forwards;
+        }
+
+        @keyframes move {
+            to {
+                top: 120vh
+            }
+        }
+
+        /* ========== DRONE DOT ========== */
+        .drone {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: cyan;
+            box-shadow: 0 0 15px cyan;
+        }
+
+        /* ========== CANVAS ========== */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP LIGHTS -->
+    <div class="lights top">
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+    </div>
+
+    <!-- LEFT LIGHTS -->
+    <div class="lights left">
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+    </div>
+
+    <!-- RIGHT LIGHTS -->
+    <div class="lights right">
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+        <div class="bulb"></div>
+    </div>
+
+    <div class="welcome">
+        <h1>🎉 Thanks To Open 🎉</h1>
+        <p>Click ribbon to open your surprise</p>
+    </div>
+
+    <div class="ribbon" onclick="openCard()">🎀 OPEN CARD 🎀</div>
+
+    <div class="card" id="card">
+        <h2>🎆 Happy New Year 🎆</h2>
+        <p>
+            May your life shine brighter than fireworks ✨<br>
+            Success • Happiness • Health 💖
+        </p>
+        <p>From Rohit Mehta 💖</p>
+    </div>
+
+    <canvas id="fw"></canvas>
+
+    <script>
+        /* ========== FIREWORKS ========== */
+        const c = document.getElementById("fw");
+        const ctx = c.getContext("2d");
+        c.width = innerWidth;
+        c.height = innerHeight;
+        let particles = [];
+
+        function firework() {
+            for (let i = 0; i < 140; i++) {
+                particles.push({
+                    x: c.width / 2,
+                    y: c.height / 2,
+                    dx: (Math.random() - 0.5) * 9,
+                    dy: (Math.random() - 0.5) * 9,
+                    life: 120,
+                    col: `hsl(${Math.random() * 360},100%,50%)`
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, c.width, c.height);
+            particles.forEach((p, i) => {
+                p.x += p.dx;
+                p.y += p.dy;
+                p.life--;
+                ctx.fillStyle = p.col;
+                ctx.fillRect(p.x, p.y, 3, 3);
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        /* ========== STARS ========== */
+        function startStars() {
+            setInterval(() => {
+                let s = document.createElement("div");
+                s.className = "star";
+                s.innerHTML = "★";
+                s.style.left = Math.random() * 100 + "vw";
+                s.style.animationDuration = 2 + Math.random() * 3 + "s";
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 5000);
+            }, 100);
+        }
+
+        /* ========== DJ LIGHT ========== */
+        function djLight() {
+            let d = document.createElement("div");
+            d.className = "dj";
+            d.style.left = Math.random() * 100 + "vw";
+            d.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+            d.style.animationDuration = 1 + Math.random() * 2 + "s";
+            document.body.appendChild(d);
+            setTimeout(() => d.remove(), 3000);
+        }
+
+        /* ========== DRONE SHOW ========== */
+        function droneShow() {
+            for (let i = 0; i < 60; i++) {
+                let dot = document.createElement("div");
+                dot.className = "drone";
+                dot.style.left = "50vw";
+                dot.style.top = "50vh";
+                document.body.appendChild(dot);
+
+                setTimeout(() => {
+                    dot.style.transition = "2s";
+                    dot.style.left = Math.random() * 100 + "vw";
+                    dot.style.top = Math.random() * 40 + "vh";
+                }, 100);
+
+                setTimeout(() => dot.remove(), 4000);
+            }
+        }
+
+        /* ========== OPEN CARD ========== */
+        function openCard() {
+            document.getElementById("card").style.display = "block";
+
+            document.querySelectorAll(".lights").forEach(l => {
+                l.classList.add("party");
+            });
+
+            startStars();
+            setInterval(firework, 600);
+            setInterval(djLight, 120);
+            setInterval(droneShow, 2500);
+        }
+    </script>
+
+</body>
+
+</html>
